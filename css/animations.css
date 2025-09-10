@@ -1,0 +1,500 @@
+/* ====================================
+   ANIMATIONS & QUANTUM EFFECTS
+   Team IGNITE - Championship Edition
+   ==================================== */
+
+/* ====================================
+   QUANTUM LOADING ANIMATION
+   ==================================== */
+
+.quantum-logo {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 2rem;
+}
+
+.nucleus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, #ffffff 0%, #e0e7ff 100%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  animation: nucleusPulse 2s ease-in-out infinite;
+}
+
+@keyframes nucleusPulse {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 1);
+  }
+}
+
+.electron-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.orbit-1 {
+  width: 60px;
+  height: 60px;
+  animation: orbitRotate 3s linear infinite;
+}
+
+.orbit-2 {
+  width: 90px;
+  height: 90px;
+  animation: orbitRotate 4s linear infinite reverse;
+  transform: translate(-50%, -50%) rotateX(60deg);
+}
+
+.orbit-3 {
+  width: 120px;
+  height: 120px;
+  animation: orbitRotate 5s linear infinite;
+  transform: translate(-50%, -50%) rotateY(60deg);
+}
+
+@keyframes orbitRotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.orbit-2 {
+  animation: orbitRotate2 4s linear infinite reverse;
+}
+
+.orbit-3 {
+  animation: orbitRotate3 5s linear infinite;
+}
+
+@keyframes orbitRotate2 {
+  from { transform: translate(-50%, -50%) rotateX(60deg) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotateX(60deg) rotate(360deg); }
+}
+
+@keyframes orbitRotate3 {
+  from { transform: translate(-50%, -50%) rotateY(60deg) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotateY(60deg) rotate(360deg); }
+}
+
+.electron {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #60a5fa 0%, #3b82f6 100%);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+  animation: electronGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes electronGlow {
+  from { 
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+    transform: translateX(-50%) scale(1);
+  }
+  to { 
+    box-shadow: 0 0 20px rgba(96, 165, 250, 1);
+    transform: translateX(-50%) scale(1.3);
+  }
+}
+
+/* ====================================
+   FLOATING ANIMATIONS
+   ==================================== */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(10px); }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+.float-animation-reverse {
+  animation: floatReverse 6s ease-in-out infinite;
+}
+
+/* ====================================
+   GRADIENT ANIMATIONS
+   ==================================== */
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-animated {
+  background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+  background-size: 400% 400%;
+  animation: gradientShift 4s ease infinite;
+}
+
+/* ====================================
+   QUANTUM DATA FLOW
+   ==================================== */
+
+@keyframes dataFlow {
+  0% {
+    transform: translateX(-100%) scale(0);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(-80%) scale(0.5);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(0%) scale(1);
+    opacity: 1;
+  }
+  90% {
+    transform: translateX(80%) scale(0.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(100%) scale(0);
+    opacity: 0;
+  }
+}
+
+.data-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  animation: dataFlow 3s linear infinite;
+}
+
+.data-particle:nth-child(2) { animation-delay: 0.5s; }
+.data-particle:nth-child(3) { animation-delay: 1s; }
+.data-particle:nth-child(4) { animation-delay: 1.5s; }
+.data-particle:nth-child(5) { animation-delay: 2s; }
+
+/* ====================================
+   GLOWING EFFECTS
+   ==================================== */
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(59, 130, 246, 0.8), 
+                0 0 35px rgba(59, 130, 246, 0.4);
+  }
+}
+
+.glow-effect {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* ====================================
+   MATRIX RAIN EFFECT
+   ==================================== */
+
+@keyframes matrixRain {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.matrix-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.matrix-column {
+  position: absolute;
+  top: -100vh;
+  font-family: var(--font-family-mono);
+  font-size: 14px;
+  color: rgba(59, 130, 246, 0.1);
+  animation: matrixRain 10s linear infinite;
+  line-height: 1.2;
+}
+
+/* ====================================
+   QUANTUM STATE TRANSITIONS
+   ==================================== */
+
+@keyframes quantumFlicker {
+  0%, 100% { opacity: 1; }
+  25% { opacity: 0.7; }
+  50% { opacity: 0.3; }
+  75% { opacity: 0.8; }
+}
+
+.quantum-flicker {
+  animation: quantumFlicker 0.5s ease-in-out;
+}
+
+@keyframes superposition {
+  0% { 
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  25% { 
+    transform: translateX(-2px) scale(0.98);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: translateX(2px) scale(1.02);
+    opacity: 0.6;
+  }
+  75% { 
+    transform: translateX(-1px) scale(0.99);
+    opacity: 0.8;
+  }
+  100% { 
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.superposition-effect {
+  animation: superposition 0.3s ease-in-out;
+}
+
+/* ====================================
+   WAVE ANIMATIONS
+   ==================================== */
+
+@keyframes wave {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.wave-animation {
+  position: relative;
+  overflow: hidden;
+}
+
+.wave-animation::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: wave 2s ease-in-out;
+}
+
+/* ====================================
+   CHART ANIMATIONS
+   ==================================== */
+
+@keyframes chartDrawIn {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.chart-animate-in {
+  animation: scaleIn 0.6s ease-out;
+}
+
+/* ====================================
+   NOTIFICATION ANIMATIONS
+   ==================================== */
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.slide-out-right {
+  animation: slideOutRight 0.3s ease-in;
+}
+
+/* ====================================
+   HOVER EFFECTS
+   ==================================== */
+
+@keyframes buttonPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.pulse-on-hover:hover {
+  animation: buttonPulse 0.6s ease-out;
+}
+
+/* ====================================
+   STATUS INDICATORS
+   ==================================== */
+
+@keyframes statusBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.status-running {
+  animation: statusBlink 1s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.status-pulse {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* ====================================
+   QUANTUM INTERFERENCE PATTERNS
+   ==================================== */
+
+@keyframes interference {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+.interference-pattern {
+  background: radial-gradient(
+    circle at 20% 50%,
+    rgba(59, 130, 246, 0.1) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    circle at 80% 50%,
+    rgba(99, 102, 241, 0.1) 0%,
+    transparent 50%
+  );
+  background-size: 200% 200%;
+  animation: interference 4s ease-in-out infinite;
+}
+
+/* ====================================
+   PERFORMANCE OPTIMIZATIONS
+   ==================================== */
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+
+/* ====================================
+   REDUCED MOTION SUPPORT
+   ==================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .quantum-logo * {
+    animation: none !important;
+  }
+  
+  .loading-progress {
+    animation: none !important;
+    width: 100% !important;
+  }
+}

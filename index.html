@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job.Q - Quantum Jobs Tracker | Team IGNITE</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚛️</text></svg>">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons with fallback -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"
+          onerror="console.log('⚠️ Font Awesome CDN unavailable - using fallback icons')">
+    
+    <!-- Chart.js with fallback -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js" 
+            onerror="console.log('⚠️ Chart.js CDN unavailable - charts will be disabled but core functionality will work')"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="quantum-logo">
+                <div class="electron-orbit orbit-1">
+                    <div class="electron"></div>
+                </div>
+                <div class="electron-orbit orbit-2">
+                    <div class="electron"></div>
+                </div>
+                <div class="electron-orbit orbit-3">
+                    <div class="electron"></div>
+                </div>
+                <div class="nucleus"></div>
+            </div>
+            <h2>Initializing Quantum Dashboard</h2>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p id="loading-text">Connecting to IBM Quantum Network...</p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div id="main-app" class="main-app hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="logo">
+                        <div class="logo-icon">⚛️</div>
+                        <div class="logo-text">
+                            <h1>Job.Q</h1>
+                            <span>Quantum Jobs Tracker</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="header-center">
+                    <nav class="nav-tabs">
+                        <button class="nav-tab active" data-tab="dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Dashboard
+                        </button>
+                        <button class="nav-tab" data-tab="jobs">
+                            <i class="fas fa-list-ul"></i>
+                            Jobs
+                        </button>
+                        <button class="nav-tab" data-tab="analytics">
+                            <i class="fas fa-chart-line"></i>
+                            Analytics
+                        </button>
+                        <button class="nav-tab" data-tab="machines">
+                            <i class="fas fa-microchip"></i>
+                            Machines
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="header-right">
+                    <div class="connection-status">
+                        <div class="status-indicator online"></div>
+                        <span>IBM Quantum Online</span>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-icon" id="refresh-data" title="Refresh Data">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button class="btn-icon" id="toggle-theme" title="Toggle Theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="btn-icon" id="notifications" title="Notifications">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content active">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card gradient-blue">
+                        <div class="stat-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="running-jobs">0</div>
+                            <div class="stat-label">Running Jobs</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card gradient-purple">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="queued-jobs">0</div>
+                            <div class="stat-label">Queued Jobs</div>
+                            <div class="stat-change negative">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>-8%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card gradient-green">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="completed-jobs">0</div>
+                            <div class="stat-label">Completed Today</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+24%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card gradient-orange">
+                        <div class="stat-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="active-machines">0</div>
+                            <div class="stat-label">Active Machines</div>
+                            <div class="stat-change neutral">
+                                <i class="fas fa-minus"></i>
+                                <span>0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Job Status Distribution</h3>
+                            <div class="chart-actions">
+                                <button class="btn-sm" data-timeframe="1h">1H</button>
+                                <button class="btn-sm active" data-timeframe="24h">24H</button>
+                                <button class="btn-sm" data-timeframe="7d">7D</button>
+                            </div>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="statusChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Job Execution Timeline</h3>
+                            <div class="chart-actions">
+                                <button class="btn-sm" data-metric="count">Count</button>
+                                <button class="btn-sm active" data-metric="time">Time</button>
+                            </div>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="timelineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-section">
+                    <div class="section-header">
+                        <h3>Recent Activity</h3>
+                        <button class="btn-link">View All</button>
+                    </div>
+                    <div class="activity-feed" id="activity-feed">
+                        <!-- Activity items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jobs Tab -->
+            <div id="jobs-tab" class="tab-content">
+                <div class="jobs-header">
+                    <div class="jobs-title">
+                        <h2>Quantum Jobs</h2>
+                        <span class="jobs-count">Total: <span id="total-jobs">0</span> jobs</span>
+                    </div>
+                    <div class="jobs-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search jobs..." id="job-search">
+                        </div>
+                        <div class="filter-dropdown">
+                            <button class="btn-secondary dropdown-toggle" id="status-filter">
+                                <i class="fas fa-filter"></i>
+                                All Status
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="#" data-status="all">All Status</a>
+                                <a href="#" data-status="running">Running</a>
+                                <a href="#" data-status="queued">Queued</a>
+                                <a href="#" data-status="completed">Completed</a>
+                                <a href="#" data-status="failed">Failed</a>
+                            </div>
+                        </div>
+                        <button class="btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Submit Job
+                        </button>
+                    </div>
+                </div>
+
+                <div class="jobs-table-container">
+                    <table class="jobs-table" id="jobs-table">
+                        <thead>
+                            <tr>
+                                <th>Job ID</th>
+                                <th>Status</th>
+                                <th>Backend</th>
+                                <th>Circuits</th>
+                                <th>Shots</th>
+                                <th>Created</th>
+                                <th>Duration</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jobs-table-body">
+                            <!-- Jobs will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button class="btn-icon" id="prev-page" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span class="page-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+                    <button class="btn-icon" id="next-page">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="analytics-tab" class="tab-content">
+                <div class="analytics-grid">
+                    <div class="analytics-card full-width">
+                        <div class="card-header">
+                            <h3>Machine Utilization</h3>
+                            <div class="card-actions">
+                                <button class="btn-sm">Export</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="utilizationChart" style="height: 300px;"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>Success Rate</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="successChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>Average Wait Time</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="metric-display">
+                                <div class="metric-value">2.4<span>min</span></div>
+                                <div class="metric-trend positive">
+                                    <i class="fas fa-arrow-down"></i>
+                                    <span>-15% from yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Machines Tab -->
+            <div id="machines-tab" class="tab-content">
+                <div class="machines-grid" id="machines-grid">
+                    <!-- Machine cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/quantum-api.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
